@@ -38,7 +38,7 @@ class Connect
     {
         if (empty(self::$instance)) {
             try {
-                $pdo = new PDO("mysql:host=".self::HOST.";dbname=".self::DBNAME, self::USER, self::PASSWD);
+                $pdo = new PDO("mysql:host=".self::HOST.";dbname=".self::DBNAME, self::USER, self::PASSWD, self::OPTIONS);
 
                 self::$instance =  $pdo;
 

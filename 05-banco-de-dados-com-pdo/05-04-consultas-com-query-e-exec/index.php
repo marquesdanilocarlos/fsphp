@@ -6,6 +6,8 @@ require __DIR__ . "/../source/autoload.php";
 
 use Source\Database\Connect;
 
+$pdo = Connect::getInstance();
+
 /*
  * [ insert ] Cadastrar dados.
  * https://mariadb.com/kb/en/library/insert/
@@ -15,6 +17,21 @@ use Source\Database\Connect;
  */
 fullStackPHPClassSession("insert", __LINE__);
 
+$insert = "INSERT INTO users (first_name, last_name, email, document) VALUES ('Robson', 'Leite', 'cursos@upinside.com.br', '2987964')";
+
+try {
+    //$exec = $pdo->exec($insert);
+    //var_dump($pdo->lastInsertId());
+
+
+    $query = $pdo->query($insert);
+
+    var_dump($query, $query->errorInfo(), $pdo->lastInsertId());
+
+} catch (PDOException $e) {
+    var_dump($e);
+}
+
 
 /*
  * [ select ] Ler/Consultar dados.
@@ -22,6 +39,16 @@ fullStackPHPClassSession("insert", __LINE__);
  */
 fullStackPHPClassSession("select", __LINE__);
 
+try {
+
+    $select = "SELECT * FROM users LIMIT 10";
+
+    $query = $pdo->query($select);
+
+    var_dump($query, $query->fetchAll(), $query->rowCount());
+} catch (PDOException $e) {
+    var_dump($e);
+}
 
 /*
  * [ update ] Atualizar dados.
@@ -29,9 +56,32 @@ fullStackPHPClassSession("select", __LINE__);
  */
 fullStackPHPClassSession("update", __LINE__);
 
+try {
+
+    $update = "UPDATE users SET first_name = 'Danilo', last_name = 'Marques' WHERE id = 50";
+
+    $exec = $pdo->exec($update);
+
+    var_dump($exec);
+
+} catch (PDOException $e) {
+    var_dump($e);
+}
 
 /*
  * [ delete ] Deletar dados.
  * https://mariadb.com/kb/en/library/delete/
  */
 fullStackPHPClassSession("delete", __LINE__);
+
+try {
+
+    $delete = "DELETE FROM users WHERE id > 50";
+
+    $exec = $pdo->exec($delete);
+
+    var_dump($exec);
+
+} catch (PDOException $e) {
+    var_dump($e);
+}
