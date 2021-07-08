@@ -62,6 +62,22 @@ class UserModel extends Model
     {
         if (!empty($this->id)) {
             $userId = $this->id;
+
+            $email = $this->read("SELECT id, email FROM " . self::$entity . " WHERE email = :email AND id != :id", "email={$this->email}&id={$userId}");
+
+            if ($email->rowCount()) {
+                $this->message = "O email informado já está cadastrado";
+                return null;
+            }
+
+            $this->update(self::$entity, $this->safe(), "id = :id", "id={$userId}");
+
+            if ($this->getFail()) {
+                $this->message = "Erro ao atualizar, verifique os dados.";
+                return null;
+            }
+
+            $this->message = "Dados atualizados com sucesso!";
         }
 
         if (empty($this->id)) {

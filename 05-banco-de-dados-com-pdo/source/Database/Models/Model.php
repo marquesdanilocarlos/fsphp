@@ -93,7 +93,6 @@ abstract class Model
             $stmt->execute($this->filter($data));
 
             return Connect::getInstance()->lastInsertId();
-
         } catch (\PDOException $e) {
             $this->fail = $e;
             return null;
@@ -123,8 +122,26 @@ abstract class Model
         }
     }
 
-    protected function update()
+    protected function update(string $entity, array $data, string $terms, string $params): ?int
     {
+        try {
+            $dataSet = [];
+            foreach ($data as $key => $value) {
+                $dataSet[] = "{$key} = :{$key}";
+            }
+            $dataSet = implode(", ", $dataSet);
+
+            $stmt = Connect::getInstance()->prepare("UPDATE {$entity} SET {$dataSet} WHERE {$terms}");
+
+            parse_str($params, $params);
+
+            $stmt->execute($this->filter(array_merge($params, $data)));
+
+            return $stmt->rowCount() ?? 1;
+        } catch (\PDOException $e) {
+            $this->fail = $e;
+            return null;
+        }
     }
 
     protected function delete()
