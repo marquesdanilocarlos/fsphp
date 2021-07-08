@@ -144,8 +144,21 @@ abstract class Model
         }
     }
 
-    protected function delete()
+    protected function delete(string $entity, string $terms, string $params): ?int
     {
+        try {
+            $stmt = Connect::getInstance()->prepare("DELETE FROM {$entity} WHERE {$terms}");
+
+            parse_str($params, $params);
+
+            $stmt->execute($params);
+
+            return $stmt->rowCount() ?? 1;
+
+        } catch (\PDOException $e) {
+            $this->fail = $e;
+            return null;
+        }
     }
 
     protected function safe(): ?array
