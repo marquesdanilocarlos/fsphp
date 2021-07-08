@@ -82,8 +82,22 @@ abstract class Model
         return $this->message;
     }
 
-    protected function create()
+    protected function create(string $entity, array $data): ?int
     {
+        try {
+            $columns = implode(", ", array_keys($data));
+            $values = ":" . implode(", :", array_keys($data));
+
+            $stmt = Connect::getInstance()->prepare("INSERT INTO {$entity} ({$columns}) VALUES ({$values})");
+
+            $stmt->execute($this->filter($data));
+
+            return Connect::getInstance()->lastInsertId();
+
+        } catch (\PDOException $e) {
+            $this->fail = $e;
+            return null;
+        }
     }
 
     protected function read(string $select, string $params): ?\PDOStatement
@@ -117,11 +131,25 @@ abstract class Model
     {
     }
 
-    protected function safe()
+    protected function safe(): ?array
     {
+        $safe = (array)$this->data;
+
+        foreach (static::$safe as $unset) {
+            unset($safe[$unset]);
+        }
+
+        return $safe;
     }
 
-    protected function filter()
+    private function filter(array $data): array
     {
+        $filter = [];
+
+        foreach ($data as $key => $value) {
+            $filter[$key] = (is_null($value)) ? null : filter_var($value, FILTER_SANITIZE_STRIPPED);
+        }
+
+        return $filter;
     }
 }
