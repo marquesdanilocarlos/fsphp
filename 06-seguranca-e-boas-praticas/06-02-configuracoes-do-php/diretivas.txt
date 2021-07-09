@@ -1,0 +1,74 @@
+;As diretivas a seguir podem proteger de ataques RFI (Remote File Inclusion), ataque de inclusão remota de arquivos onde o atacante utiliza uma URL para inclusão de um arquivo malicioso, que mostra dados como constantes de senhas ou que reescreve a index por exemplo, gerando um ataque DOS.
+
+;Permite que o servidor abra arquivos externos
+allow_url_fopen = Off
+
+;Permite que o código PHP do meu servidor inclua arquivos externos
+allow_url_include = Off
+
+;-----------------------------------------------------------------------
+
+;Controle do uso de memória e o tempo de execução do PHP
+
+;Limite de uso de memória do servidor pelo PHP
+memory_limit = 128m
+
+;Tempo máximo de execução de um script PHP
+max_execution_time = 5s
+
+;Tempo máximo de execução de um script que realizou uma ação de input, como por exemplo um formulário que fez o upload de um arquivo
+max_input_time = 60s
+
+;-----------------------------------------------------------------------
+
+;Controle de tamanhos, número e ativação de dados por requisições POST e GET
+
+;Tamanho máximo de uma requisição POST realizada para o servidor
+post_max_size = 25M
+
+;Tamanho máximo de dimensões que um array pode possuir numa requisição POST ou GET para o servidor
+;max_input_nesting_level = 64
+
+;Permite realizar ou não upload de arquivos através de formulários para o servidor
+file_uploads = 1
+
+;Tamanho máximo de um arquivo único a ser realizado upload para o servidor por requisição
+upload_max_filesize = 8M
+
+;Número máximo de arquivos a ser realizado o upload por requisição
+max_file_uploads = 3
+
+;-----------------------------------------------------------------------
+
+;Controle de buffer de saída do PHP. Já que cada comando de saída no PHP equivale a uma requisição, é possível guardar todas as saídas num buffer e cuspir na tela somente no final do arquivo, gerando apenas uma requisição.
+
+;Habilita ou desabilita o buffer de saída
+;On = Habilita e não seta limite de tamanho para o buffer
+;Off = Desabilita
+;Número inteiro = Habilita e seta o tamanho máximo de dados que podem ser armazenados em buffer
+output_buffering = 4096
+
+;Habilita a execução imediata de um comando de saída no PHP, gerando uma requisição para cada comando
+implicit_flush = Off
+
+;-----------------------------------------------------------------------
+
+;Controla o cache de processamento dos scripts PHP
+
+;Tamanho máximo de cache
+;realpath_cache_size = 4096K
+
+;Temo máximo de processamento do cache
+realpath_cache_ttl = 120
+
+;-----------------------------------------------------------------------
+
+;Um cache bytecode de scripts PHP pré-compilados em memória compartilhada que elimina a necessidade do PHP carregar e analisar scripts em cada requisição.
+
+;Habilita o opcache e deve ser habilitado antes do xdebug
+zend_extension = opcache.so
+
+;Informa ao opcache que deve pré processar os arquivos e não deve utilizar o que já existe compilado em cache. Habilitar para desenvolvimento e desabilitar para produção.
+;true = Ativo
+;0 = Inativo
+;opcache.validate_timestamps = 0
