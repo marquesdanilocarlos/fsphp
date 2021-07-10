@@ -1,11 +1,76 @@
 <?php
 
 /**
+ * ########################
+ * ### VALIDATE HELPERS ###
+ * ########################
+ */
+
+/**
+ * @param string $email
+ * @return bool
+ */
+function isEmail(string $email): bool
+{
+    return filter_var($email, FILTER_VALIDATE_EMAIL);
+}
+
+/**
+ * @param string $password
+ * @return bool
+ */
+function isPassword(string $password): bool
+{
+    return mb_strlen($password) >= CONF_PASSWD_MIN_LEN && mb_strlen($password) <= CONF_PASSWD_MAX_LEN;
+}
+
+/**
+ * ###################
+ * ### URL HELPERS ###
+ * ###################
+ */
+
+/**
+ * @param string $path
+ * @return string
+ */
+function url(string $path): string
+{
+    $base = CONF_URL_BASE;
+
+    $path = ($path[0] == "/") ? mb_substr($path, 1) : $path;
+
+    return "{$base}{$path}";
+}
+
+/**
+ * @param string $url
+ */
+function redirect(string $url): void
+{
+    header("HTTP/1.1 302 Redirect");
+
+    if (filter_var($url, FILTER_VALIDATE_URL)) {
+        header("Location: {$url}");
+        exit;
+    }
+
+    $location = url($url);
+    header("Location: {$location}");
+    exit;
+}
+
+/**
  * ######################
  * ### STRING HELPERS ###
  * ######################
  */
 
+
+/**
+ * @param string $string
+ * @return string
+ */
 function strSlug(string $string): string
 {
     $string = filter_var(mb_strtolower($string), FILTER_SANITIZE_STRIPPED);
@@ -19,6 +84,10 @@ function strSlug(string $string): string
     return $slug;
 }
 
+/**
+ * @param string $string
+ * @return string
+ */
 function strStudlyCase(string $string): string
 {
     $string = strSlug($string);
@@ -34,16 +103,30 @@ function strStudlyCase(string $string): string
     return $studlyCase;
 }
 
+/**
+ * @param string $string
+ * @return string
+ */
 function strCamelCase(string $string): string
 {
     return lcfirst(strStudlyCase($string));
 }
 
+/**
+ * @param string $string
+ * @return string
+ */
 function strTitle(string $string)
 {
     return mb_convert_case(filter_var($string, FILTER_SANITIZE_SPECIAL_CHARS), MB_CASE_TITLE);
 }
 
+/**
+ * @param string $string
+ * @param int $limit
+ * @param string $pointer
+ * @return string
+ */
 function strLimitWords(string $string, int $limit, string $pointer = "..."): string
 {
     $string = trim(filter_var($string, FILTER_SANITIZE_SPECIAL_CHARS));
@@ -58,6 +141,12 @@ function strLimitWords(string $string, int $limit, string $pointer = "..."): str
     return "{$words}{$pointer}";
 }
 
+/**
+ * @param string $string
+ * @param int $limit
+ * @param string $pointer
+ * @return string
+ */
 function strLimitChars(string $string, int $limit, string $pointer = "...")
 {
     $string = trim(filter_var($string, FILTER_SANITIZE_SPECIAL_CHARS));
@@ -69,4 +158,42 @@ function strLimitChars(string $string, int $limit, string $pointer = "...")
     $chars = mb_substr($string, 0, mb_strrpos(mb_substr($string, 0, $limit), " "));
 
     return "{$chars}{$pointer}";
+}
+
+/**
+ * ######################
+ * ### OBJECT HELPERS ###
+ * ######################
+ */
+
+/**
+ * @return PDO
+ */
+function db(): PDO
+{
+    return \Source\Core\Connect::getInstance();
+}
+
+/**
+ * @return \Source\Core\Message
+ */
+function message(): \Source\Core\Message
+{
+    return new \Source\Core\Message();
+}
+
+/**
+ * @return \Source\Core\Session
+ */
+function session(): \Source\Core\Session
+{
+    return new \Source\Core\Session();
+}
+
+/**
+ * @return \Source\Models\User
+ */
+function user(): \Source\Models\User
+{
+    return new \Source\Models\User();
 }

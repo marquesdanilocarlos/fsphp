@@ -12,7 +12,7 @@ define("CONF_DB_NAME", "fs_php");
 /**
  * URLS
  */
-define("CONF_URL_BASE", "http://localhost/fsphp");
+define("CONF_URL_BASE", "http://localhost/fsphp/06-seguranca-e-boas-praticas/06-08-camada-de-manipulacao-pt3/index.php");
 define("CONF_URL_ADMIN", CONF_URL_BASE . "/admin");
 define("CONF_URL_ERROR", CONF_URL_BASE . "/404");
 
@@ -36,3 +36,11 @@ define("CONF_MESSAGE_INFO", "info");
 define("CONF_MESSAGE_SUCCESS", "success");
 define("CONF_MESSAGE_WARNING", "warning");
 define("CONF_MESSAGE_ERROR", "error");
+
+
+/**
+ * PASSWORD
+ */
+
+define("CONF_PASSWD_MIN_LEN", 8);
+define("CONF_PASSWD_MAX_LEN", 40);
