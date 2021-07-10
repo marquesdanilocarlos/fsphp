@@ -13,6 +13,8 @@ $string = "Essa é uma string, nela temos um under_score e um guarda-chuva!";
 
 $message = new \Source\Core\Message();
 
-echo $message->info(str_slug($string));
-echo $message->info(str_studly_case($string));
-echo $message->info(str_camel_case($string));
+echo $message->info(strTitle($string));
+echo $message->info(strLimitWords($string, 8));
+echo $message->info(strLimitChars($string, 45));
+
+
