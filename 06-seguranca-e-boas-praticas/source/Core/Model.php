@@ -58,7 +58,7 @@ abstract class Model
     /**
      * @return object|null
      */
-    protected function getData(): ?object
+    public function getData(): ?object
     {
         return $this->data;
     }
@@ -66,7 +66,7 @@ abstract class Model
     /**
      * @return \PDOException|null
      */
-    protected function getFail(): ?\PDOException
+    public function getFail(): ?\PDOException
     {
         return $this->fail;
     }
@@ -74,7 +74,7 @@ abstract class Model
     /**
      * @return string|null
      */
-    protected function getMessage(): ?string
+    public function getMessage(): ?string
     {
         return $this->message;
     }

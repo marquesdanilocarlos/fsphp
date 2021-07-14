@@ -22,7 +22,7 @@ if (!isEmail($email)) {
 
 $passwd = "1235647894634646464646498749798";
 
-if (!isPassword($passwd)) {
+if (!isPasswd($passwd)) {
     echo $message->error("Senha inválido");
 } else {
     echo $message->success("Senha válido");
