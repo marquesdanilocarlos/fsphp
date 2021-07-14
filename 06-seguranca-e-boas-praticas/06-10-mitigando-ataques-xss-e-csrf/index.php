@@ -10,12 +10,30 @@ require __DIR__ . "/../source/autoload.php";
  */
 fullStackPHPClassSession("xxs", __LINE__);
 
+$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRIPPED);
+
+if ($post) {
+    $data = (object)$post;
+
+    var_dump($post);
+
+    echo $data->first_name;
+}
+
 
 /*
  * [ CSRF ] Cross-Site Request Forgery
  * https://pt.wikipedia.org/wiki/Cross-site_request_forgery
  */
 fullStackPHPClassSession("csrf", __LINE__);
+
+
+
+if ($_REQUEST && !csrfVerify($_REQUEST)) {
+    echo message()->error("Requisição bloqueada por ataque CSRF!!!");
+} else {
+    var_dump($_REQUEST);
+}
 
 
 /*

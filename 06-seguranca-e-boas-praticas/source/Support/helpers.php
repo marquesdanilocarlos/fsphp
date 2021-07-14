@@ -52,6 +52,21 @@ function passwdRehash(string $hash): bool
     return password_needs_rehash($hash, CONF_PASSWD_ALGO, CONF_PASSWD_OPTIONS);
 }
 
+function csrfInput(): string
+{
+    session()->csrf();
+    return "<input type='hidden' name='csrf' value='".session()->csrf."'/>";
+}
+
+function csrfVerify(array $request): bool
+{
+    if (empty($request["csrf"]) || !session()->has("csrf") || ($request["csrf"] != session()->csrf)) {
+        return false;
+    }
+
+    return true;
+}
+
 /**
  * ###################
  * ### URL HELPERS ###

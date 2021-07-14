@@ -109,4 +109,14 @@ class Session
 
         return null;
     }
+
+    public static function csrf()
+    {
+        try {
+            $_SESSION["csrf"] = base64_encode(random_bytes(20));
+        } catch (\Exception $e) {
+            message()->error($e->getMessage());
+        }
+
+    }
 }
