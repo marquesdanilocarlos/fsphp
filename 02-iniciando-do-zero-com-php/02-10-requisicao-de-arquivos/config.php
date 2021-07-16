@@ -1,3 +1,0 @@
-<?php
-
-const COURSE = "FSPHP";
