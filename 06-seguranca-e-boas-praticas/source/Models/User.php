@@ -71,6 +71,19 @@ class User extends Model
             return null;
         }
 
+        if (!isEmail($this->email)) {
+            $this->message->warning("O e-mail informado não é valido!");
+            return null;
+        }
+
+        if (!isPasswd($this->password)) {
+
+            $this->message->warning("A senha deve ter entre " . CONF_PASSWD_MIN_LEN . " e " . CONF_PASSWD_MAX_LEN . " caracteres");
+            return null;
+        }
+
+        $this->password = passwd($this->password);
+
         if (!empty($this->id)) {
             $userId = $this->id;
 
@@ -126,21 +139,4 @@ class User extends Model
 
         return $this;
     }
-
-    /*private function required(): bool
-    {
-        foreach (self::$requiredFields as $requiredField) {
-            if (empty($this->{$requiredField})) {
-                $this->message = "O campo $requiredField é obrigatório.";
-                return false;
-            }
-        }
-
-        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            $this->message = "O email informado não parece válido.";
-            return false;
-        }
-
-        return true;
-    }*/
 }
