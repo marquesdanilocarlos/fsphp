@@ -20,9 +20,14 @@ abstract class Model
     protected ?\PDOException $fail = null;
 
     /**
-     * @var string|null
+     * @var Message|null
      */
-    protected ?string $message = null;
+    protected ?Message $message = null;
+
+    public function __construct()
+    {
+        $this->message = new Message();
+    }
 
     /**
      * @param string $name
@@ -72,9 +77,9 @@ abstract class Model
     }
 
     /**
-     * @return string|null
+     * @return Message|null
      */
-    public function getMessage(): ?string
+    public function getMessage(): ?Message
     {
         return $this->message;
     }
@@ -177,5 +182,17 @@ abstract class Model
         }
 
         return $filter;
+    }
+
+    protected function required(): bool
+    {
+        $data = (array)$this->getData();
+        foreach (static::$requiredFields as $field) {
+            if (empty($data[$field])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
