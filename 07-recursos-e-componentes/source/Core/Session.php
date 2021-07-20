@@ -1,6 +1,8 @@
 <?php
 
+
 namespace Source\Core;
+
 
 /**
  * Class Session
@@ -20,28 +22,25 @@ class Session
     }
 
     /**
-     * @param $name
-     * @return null|mixed
+     * @param string $name
+     * @return mixed|null
      */
-    public function __get($name)
+    public function __get(string $name)
     {
-        if (!empty($_SESSION[$name])) {
-            return $_SESSION[$name];
-        }
-        return null;
+        return $_SESSION[$name] ?? null;
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return bool
      */
-    public function __isset($name)
+    public function __isset(string $name): bool
     {
         return $this->has($name);
     }
 
     /**
-     * @return null|object
+     * @return object|null
      */
     public function all(): ?object
     {
@@ -50,20 +49,21 @@ class Session
 
     /**
      * @param string $key
-     * @param mixed $value
-     * @return Session
+     * @param $value
+     * @return $this
      */
-    public function set(string $key, $value): Session
+    public function set(string $key, $value): self
     {
-        $_SESSION[$key] = (is_array($value) ? (object)$value : $value);
+        $_SESSION[$key] = (is_array($value)) ? (object)$value : $value;
+
         return $this;
     }
 
     /**
      * @param string $key
-     * @return Session
+     * @return $this
      */
-    public function unset(string $key): Session
+    public function unset(string $key): self
     {
         unset($_SESSION[$key]);
         return $this;
@@ -79,25 +79,25 @@ class Session
     }
 
     /**
-     * @return Session
+     * @return $this
      */
-    public function regenerate(): Session
+    public function regenerate(): self
     {
         session_regenerate_id(true);
         return $this;
     }
 
     /**
-     * @return Session
+     * @return $this
      */
-    public function destroy(): Session
+    public function destroy(): self
     {
         session_destroy();
         return $this;
     }
 
     /**
-     * @return null|Message
+     * @return Message|null
      */
     public function flash(): ?Message
     {
@@ -106,14 +106,17 @@ class Session
             $this->unset("flash");
             return $flash;
         }
+
         return null;
     }
 
-    /**
-     * CSRF Token
-     */
-    public function csrf(): void
+    public static function csrf()
     {
-        $_SESSION['csrf_token'] = base64_encode(random_bytes(20));
+        try {
+            $_SESSION["csrf"] = base64_encode(random_bytes(20));
+        } catch (\Exception $e) {
+            message()->error($e->getMessage());
+        }
+
     }
 }

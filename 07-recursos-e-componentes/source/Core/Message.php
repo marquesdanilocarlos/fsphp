@@ -1,27 +1,42 @@
 <?php
 
+
 namespace Source\Core;
 
-/**
- * Class Message
- * @author Robson V. Leite <cursos@upinside.com.br>
- * @package Source\Core
- */
+
 class Message
 {
-    private $text;
-    private $type;
+    private ?string $text = null;
+    private ?string $type = null;
 
     /**
-     * @return string
+     * Tipos permitidos de métodos de renderização que podem ser utilizados
+     * @var array
      */
-    public function __toString()
+    private static array $allowedTypes = [
+        'success' => CONF_MESSAGE_SUCCESS,
+        'info' => CONF_MESSAGE_INFO,
+        'error' => CONF_MESSAGE_ERROR,
+        'warning' => CONF_MESSAGE_WARNING,
+        'default' => CONF_MESSAGE_CLASS
+    ];
+
+    public function __toString(): string
     {
         return $this->render();
     }
 
+    public function __call(string $name, array $arguments): self
+    {
+        if (!in_array($name, array_keys(self::$allowedTypes))) {
+            return $this->setParams(CONF_MESSAGE_CLASS, "Tipo de mensagem não permitido!");
+        }
+
+        return $this->setParams(self::$allowedTypes[$name], $arguments[0]);
+    }
+
     /**
-     * @return string
+     * @return string|null
      */
     public function getText(): ?string
     {
@@ -29,87 +44,38 @@ class Message
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getType(): ?string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $message
-     * @return Message
-     */
-    public function info(string $message): Message
+    private function setParams(string $type, string $text): self
     {
-        $this->type = CONF_MESSAGE_INFO;
-        $this->text = $this->filter($message);
+        $this->type = $type;
+        $this->text = $this->filter($text);
+
         return $this;
     }
 
-    /**
-     * @param string $message
-     * @return Message
-     */
-    public function success(string $message): Message
-    {
-        $this->type = CONF_MESSAGE_SUCCESS;
-        $this->text = $this->filter($message);
-        return $this;
-    }
-
-    /**
-     * @param string $message
-     * @return Message
-     */
-    public function warning(string $message): Message
-    {
-        $this->type = CONF_MESSAGE_WARNING;
-        $this->text = $this->filter($message);
-        return $this;
-    }
-
-    /**
-     * @param string $message
-     * @return Message
-     */
-    public function error(string $message): Message
-    {
-        $this->type = CONF_MESSAGE_ERROR;
-        $this->text = $this->filter($message);
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
     public function render(): string
     {
         return "<div class='" . CONF_MESSAGE_CLASS . " {$this->getType()}'>{$this->getText()}</div>";
     }
 
-    /**
-     * @return string
-     */
-    public function json(): string
+    public function json()
     {
         return json_encode(["error" => $this->getText()]);
     }
 
-    /**
-     * Set flash Session Key
-     */
     public function flash(): void
     {
-        (new Session())->set("flash", $this);
+        (new Session)->set("flash", $this);
     }
 
-    /**
-     * @param string $message
-     * @return string
-     */
-    private function filter(string $message): string
+    private function filter(string $text): string
     {
-        return filter_var($message, FILTER_SANITIZE_STRIPPED);
+        return filter_var($text, FILTER_SANITIZE_STRIPPED);
     }
 }

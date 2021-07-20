@@ -1,0 +1,23 @@
+{
+    "name": "dmarques/fsphp",
+    "authors": [
+        {
+            "name": "Danilo Marques",
+            "email": "danilo.marques@mcom.gov.br"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "config": {
+        "vendor-dir": "vendor"
+    },
+    "autoload": {
+        "psr-4": {
+            "Source\\": "source/"
+        },
+        "files": [
+            "./source/Support/config.php",
+            "./source/Support/helpers.php"
+        ]
+    }
+}
