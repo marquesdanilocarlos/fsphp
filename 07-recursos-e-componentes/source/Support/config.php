@@ -46,3 +46,18 @@ define("CONF_PASSWD_MIN_LEN", 8);
 define("CONF_PASSWD_MAX_LEN", 40);
 define("CONF_PASSWD_ALGO", PASSWORD_DEFAULT);
 define("CONF_PASSWD_OPTIONS", ["cost" => 10]);
+
+/**
+ * EMAIL
+ */
+define("CONF_MAIL_HOST", "smtp.sendgrid.net");
+define("CONF_MAIL_PORT", 587);
+define("CONF_MAIL_USER", "apikey");
+define("CONF_MAIL_PASS", "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");
+define("CONF_MAIL_SENDER", ["name" => "Danilo Marques", "address" => "marquesdanilocarlos@gmail.com"]);
+
+define("CONF_MAIL_OPTION_LANG", "br");
+define("CONF_MAIL_OPTION_HTML", true);
+define("CONF_MAIL_OPTION_AUTH", true);
+define("CONF_MAIL_OPTION_SECURE", "tls");
+define("CONF_MAIL_OPTION_CHARSET", "utf-8");
