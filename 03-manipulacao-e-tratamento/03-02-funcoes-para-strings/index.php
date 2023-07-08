@@ -24,6 +24,16 @@ var_dump([
     "strtoupper" => strtoupper($string),
     //Converter string para caixa alta com multi-byte
     "mb_strtoupper" => mb_strtoupper($string),
+    //Verificar se a string contém determinado valor
+    "str_contains" => str_contains($string, "AC/DC"),
+    //Verificar se a string começa com determinado valor
+    "str_starts_with" => str_starts_with($string, "O último"),
+    //Verificar se a string finaliza com determinado valor
+    "str_ends_with" => str_ends_with($string,"épico!"),
+    //Escapa caracteres
+    "addslashes" => addslashes("'{$string}'"),
+    //Converte caracteres html para evitar inserção de script
+    "htmlentities" => htmlentities("<{$string}>")
 ]);
 
 /**
@@ -57,11 +67,11 @@ var_dump([
     //Obter o índice numérico da posição da última ocorrência do caractere dentro da string
     "mb_strrpos" => mb_strrpos($mbReplace, ", "),
     //Obter uma parte da string
-    "mb_sbstr" => mb_substr($mbReplace, 43, 14),
+    "mb_substr" => mb_substr($mbReplace, 43, 14),
     //Obter uma parte da string a partir do caracter passado como parâmetro
     "mb_strstr" => mb_strstr($mbReplace, ", "),
     //Obter uma parte da string a partir da última ocorrência do caracter passado como parâmetro
-    "mb_strrchr" => mb_strrchr($mbReplace, ", ")
+    "mb_strrchr" => mb_strrchr($mbReplace, ", "),
 ]);
 
 $mbReplace = $string;
