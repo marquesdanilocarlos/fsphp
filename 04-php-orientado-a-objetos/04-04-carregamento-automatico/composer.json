@@ -1,0 +1,19 @@
+{
+  "name": "fsphp/autoload",
+  "description": "Full Stack PHP Developer",
+  "authors": [
+    {
+      "name": "Danilo Carlos Marques",
+      "email": "danilo.marques@basis.com.br"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "phpmailer/phpmailer": "^6.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "Source\\": "sources"
+    }
+  }
+}
