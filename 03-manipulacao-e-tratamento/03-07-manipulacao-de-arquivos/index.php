@@ -22,6 +22,8 @@ if (file_exists($file) && is_file($file)) {
 fullStackPHPClassSession("leitura e gravação", __LINE__);
 
 if (!file_exists($file) || !is_file($file)) {
+    //Modo "w" adiciona o cursor no início do arquivo
+    //Modo "a" adiciona o cursor no final do arquivo
     $newFile = fopen($file, "w");
     fwrite($newFile, "Linha 01" . PHP_EOL);
     fwrite($newFile, "Linha 01" . PHP_EOL);
@@ -45,6 +47,17 @@ while (!feof($fileRead)) {
 }
 fclose($fileRead);
 
+
+/*
+ * [ filesize, fread ] Lendo o arquivo inteiro
+ */
+fullStackPHPClassSession("filesize, fread", __LINE__);
+
+$file = fopen($file, 'r');
+$fileSize = filesize(__DIR__."/file.txt");
+$content = fread($file, $fileSize);
+
+var_dump($content);
 
 /*
  * [ get, put content ] file_get_contents | file_put_contents
