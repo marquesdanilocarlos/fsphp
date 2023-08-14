@@ -4,7 +4,7 @@ fullStackPHPClassName("05.06 - Desmistificando transações");
 
 require __DIR__ . "/../source/autoload.php";
 
-use Source\Database\Connect;
+use Source\Database\Connection;
 
 /*
  * [ transaction ] https://pt.wikipedia.org/wiki/Transa%C3%A7%C3%A3o_em_base_de_dados

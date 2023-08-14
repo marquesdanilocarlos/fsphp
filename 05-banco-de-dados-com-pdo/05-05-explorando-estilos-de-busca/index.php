@@ -4,7 +4,7 @@ fullStackPHPClassName("05.05 - Explorando estilos de busca");
 
 require __DIR__ . "/../source/autoload.php";
 
-use Source\Database\Connect;
+use Source\Database\Connection;
 
 /*
  * [ fetch ] http://php.net/manual/pt_BR/pdostatement.fetch.php
