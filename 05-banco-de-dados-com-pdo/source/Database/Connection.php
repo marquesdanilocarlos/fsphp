@@ -32,10 +32,7 @@ class Connection
                     'mysql:host=' . self::HOST . ';dbname=' . self::DB_NAME,
                     self::USER,
                     self::PASSWD,
-                    [
-                        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
-                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-                    ]
+                    self::OPTIONS
                 );
             } catch (PDOException) {
                 die("<h1>Ooops, erro ao conectar...</h1>");
