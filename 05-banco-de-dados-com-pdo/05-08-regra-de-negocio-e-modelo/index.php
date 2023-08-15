@@ -9,6 +9,9 @@ require __DIR__ . "/../source/autoload.php";
  * essa é uma layer supertype.
  */
 fullStackPHPClassSession("layer", __LINE__);
+$layer = new ReflectionClass(\Source\Model\Model::class);
+
+var_dump($layer->getDefaultProperties(), $layer->getMethods());
 
 
 /*
@@ -16,3 +19,5 @@ fullStackPHPClassSession("layer", __LINE__);
  * essas rotinas se reponsabilizando pelas regras.
  */
 fullStackPHPClassSession("model", __LINE__);
+$model = new \Source\Model\User();
+var_dump($model, get_class_methods($model));
