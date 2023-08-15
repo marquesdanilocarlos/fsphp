@@ -67,9 +67,41 @@ class User extends Model
     {
         if (!empty($this->id)) {
             $userId = $this->id;
+            $this->atualize($userId);
+        }
+
+        if (empty($this->id)) {
+           $userId = $this->insert();
+        }
+
+        $this->data = $this->read("SELECT * FROM " . self::$entity . " WHERE id = :id", "id={$userId}")->fetch();
+        return $this;
+    }
+
+    private function atualize(int $userId)
+    {
+        $email = $this->read(
+            "SELECT id FROM " . self::$entity . " WHERE email = :email AND id != :id",
+            "email={$this->email}&id={$userId}"
+        );
+
+        if ($email->rowCount()) {
+            $this->message = "O e-mail informado já está cadastrado.";
             return null;
         }
 
+        $this->update(self::$entity, $this->safe(), "id = :id", "id={$userId}");
+
+        if ($this->getFail()) {
+            $this->message = "Erro ao cadastrar, verifique os dados";
+            return null;
+        }
+
+        $this->message = "Dados atualizados com sucesso!";
+    }
+
+    private function insert(): ?int
+    {
         if (!$this->required()) {
             return null;
         }
@@ -86,8 +118,7 @@ class User extends Model
         }
         $this->message = "Cadastro realizado com sucesso!";
 
-        $this->data = $this->read("SELECT * FROM " . self::$entity . " WHERE id = :id", "id={$userId}")->fetch();
-        return $this;
+        return $userId;
     }
 
     public function destroy()
