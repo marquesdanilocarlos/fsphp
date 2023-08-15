@@ -71,7 +71,7 @@ class User extends Model
         }
 
         if (empty($this->id)) {
-           $userId = $this->insert();
+            $userId = $this->insert();
         }
 
         $this->data = $this->read("SELECT * FROM " . self::$entity . " WHERE id = :id", "id={$userId}")->fetch();
@@ -123,9 +123,22 @@ class User extends Model
 
     public function destroy()
     {
+        if (!empty($this->id)) {
+            $this->delete(self::$entity, "id = :id", "id={$this->id}");
+        }
+
+        if ($this->getFail()) {
+            $this->message = "Não foi possível remover o usuário.";
+            return null;
+        }
+
+        $this->message = "Usuário removido com sucesso!";
+        $this->data = null;
+        return $this;
     }
 
-    private function required(): bool
+    private
+    function required(): bool
     {
         foreach (self::$required as $required) {
             if (empty($this->{$required})) {
