@@ -12,19 +12,49 @@ class User extends Model
         
     }
 
-    public function getById(int $id)
+    public function getById(int $id, string $columns = "*"): ?self
     {
-        
+        $data = $this->read(
+            "SELECT {$columns} FROM " . self::$entity . " WHERE id = :id",
+            "id={$id}"
+        );
+
+        if ($this->getFail() || !$data->rowCount()) {
+            $this->message = "Usuário não encontrado para o id informado";
+            return null;
+        }
+
+        return $data->fetchObject(self::class);
     }
 
-    public function getByEmail(string $email)
+    public function getByEmail(string $email, string $columns = "*"): ?self
     {
-        
+        $data = $this->read(
+            "SELECT {$columns} FROM " . self::$entity . " WHERE email = :email",
+            "email={$email}"
+        );
+
+        if ($this->getFail() || !$data->rowCount()) {
+            $this->message = "Usuário não encontrado para o email informado";
+            return null;
+        }
+
+        return $data->fetchObject(self::class);
     }
 
-    public function all(int $limit = 30, int $offset = 0)
+    public function getAll(int $limit = 30, int $offset = 0, string $columns = "*"): ?array
     {
-        
+        $data = $this->read(
+            "SELECT {$columns} FROM " . self::$entity . " LIMIT :limit OFFSET :offset",
+            "limit={$limit}&offset={$offset}"
+        );
+
+        if ($this->getFail() || !$data->rowCount()) {
+            $this->message = "Sua consulta não retornou nenhum resultado";
+            return null;
+        }
+
+        return $data->fetchAll(\PDO::FETCH_CLASS, self::class);
     }
 
     public function save()
