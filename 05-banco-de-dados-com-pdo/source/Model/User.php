@@ -5,11 +5,17 @@ namespace Source\Model;
 class User extends Model
 {
     protected static array $safe = ["id", "created_at", "updated_at"];
+    protected static array $required = ["first_name", "last_name", "email"];
     protected static string $entity = "users";
 
-    public function bootstrap()
+    public function bootstrap(string $firstName, string $lastName, string $email, string $document = null)
     {
-        
+        $this->first_name = $firstName;
+        $this->last_name = $lastName;
+        $this->email = $email;
+        $this->document = $document;
+
+        return $this;
     }
 
     public function getById(int $id, string $columns = "*"): ?self
@@ -57,18 +63,51 @@ class User extends Model
         return $data->fetchAll(\PDO::FETCH_CLASS, self::class);
     }
 
-    public function save()
+    public function save(): ?self
     {
-        
+        if (!empty($this->id)) {
+            $userId = $this->id;
+            return null;
+        }
+
+        if (!$this->required()) {
+            return null;
+        }
+
+        if ($this->getByEmail($this->email)) {
+            $this->message = "O e-mail informado já está cadastrado.";
+            return null;
+        }
+
+        $userId = $this->create(self::$entity, $this->safe());
+        if ($this->getFail()) {
+            $this->message = "Erro ao cadastrar, verifique os dados";
+            return null;
+        }
+        $this->message = "Cadastro realizado com sucesso!";
+
+        $this->data = $this->read("SELECT * FROM " . self::$entity . " WHERE id = :id", "id={$userId}")->fetch();
+        return $this;
     }
 
     public function destroy()
     {
-        
     }
 
-    private function required()
+    private function required(): bool
     {
-        
+        foreach (self::$required as $required) {
+            if (empty($this->{$required})) {
+                $this->message = "O campo {$required} é obrigatório!";
+                return false;
+            }
+        }
+
+        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            $this->message = "O e-mail informado não é válido!";
+            return false;
+        }
+
+        return true;
     }
 }
