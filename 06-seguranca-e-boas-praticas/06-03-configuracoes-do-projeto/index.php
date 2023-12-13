@@ -26,7 +26,7 @@ var_dump($connection->fetchAll());
 $user = (new \Source\Model\User())->getById(23);
 var_dump($user);
 
-$user->destroy();
-var_dump($user);
+//$user->destroy();
+//var_dump($user);
 
 

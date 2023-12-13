@@ -1,0 +1,39 @@
+version: "3.7"
+services:
+  webserver:
+    env_file: ./.env
+    build:
+      context: '../'
+      dockerfile: './docker/Dockerfile'
+      args:
+        PHP_VERSION: ${PHP_VERSION}
+    links:
+      - mailcatcher
+    restart: always
+    volumes:
+      - /var/www/fsphp:/var/www/html/
+      - './php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini'
+      #- './90-xdebug.ini:/usr/local/etc/php/conf.d/90-xdebug.ini'
+    container_name: "${PHP_NAME}"
+    ports:
+      - "8000:80"
+  mysql:
+    image: mysql:${MYSQL_VERSION:-latest}
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${DB_NAME}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+    container_name: "${MYSQL_NAME}"
+  mailcatcher:
+    image: tophfr/mailcatcher
+    container_name: mailcatcher
+    ports:
+      - '2080:80'
+      - '2025:25'
+    restart: always
+
