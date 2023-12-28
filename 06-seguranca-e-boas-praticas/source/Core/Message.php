@@ -70,6 +70,6 @@ class Message
 
     private function filter(string $message): string
     {
-        return filter_var($message, FILTER_SANITIZE_SPECIAL_CHARS);
+        return filter_var($message, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
 }
