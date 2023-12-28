@@ -1,5 +1,35 @@
 <?php
 /**
+ * ####################
+ * ###   VALIDATE   ###
+ * ####################
+ */
+
+use Source\Core\Connection;
+use Source\Core\Message;
+use Source\Core\Session;
+use Source\Model\User;
+
+/**
+ * @param string $email
+ * @return bool
+ */
+function isEmail(string $email): bool
+{
+    return filter_var($email, FILTER_VALIDATE_EMAIL);
+}
+
+/**
+ * @param string $password
+ * @return bool
+ */
+function isPassword(string $password): bool
+{
+    return mb_strlen($password) >= CONF_PASS_MIN_LENGTH && mb_strlen($password) <= CONF_PASS_MAX_LENGTH;
+}
+
+
+/**
  * ##################
  * ###   STRING   ###
  * ##################
@@ -26,6 +56,10 @@ function strSlug(string $string): string
     return $slug;
 }
 
+/**
+ * @param string $string
+ * @return string
+ */
 function strStudlyCase(string $string): string
 {
     $studlyCase = strSlug($string);
@@ -39,17 +73,31 @@ function strStudlyCase(string $string): string
     );
 }
 
+/**
+ * @param string $string
+ * @return string
+ */
 function strCamelCase(string $string): string
 {
     return lcfirst(strStudlyCase($string));
 }
 
+/**
+ * @param string $string
+ * @return string
+ */
 function strTitle(string $string): string
 {
     $string = filter_var($string, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     return mb_convert_case($string, MB_CASE_TITLE);
 }
 
+/**
+ * @param string $string
+ * @param int $limit
+ * @param string $pointer
+ * @return string
+ */
 function strLimitWords(string $string, int $limit, string $pointer = '...'): string
 {
     $string = trim(filter_var($string, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
@@ -65,6 +113,12 @@ function strLimitWords(string $string, int $limit, string $pointer = '...'): str
     return "{$words} {$pointer}";
 }
 
+/**
+ * @param string $string
+ * @param int $limit
+ * @param string $pointer
+ * @return string
+ */
 function strLimitChars(string $string, int $limit, string $pointer = '...'): string
 {
     $string = trim(filter_var($string, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
@@ -78,4 +132,73 @@ function strLimitChars(string $string, int $limit, string $pointer = '...'): str
     $string = mb_substr($string, 0, $chars);
 
     return "{$string} {$pointer}";
+}
+
+/**
+ * ###############
+ * ###   URL   ###
+ * ###############
+ */
+
+/**
+ * @param string $path
+ * @return string
+ */
+function url(string $path): string
+{
+    $path = $path[0] === '/' ? mb_substr($path, 1) : $path;
+    return CONF_URL_BASE . '/' . $path;
+}
+
+/**
+ * @param string $url
+ * @return void
+ */
+function redirect(string $url): void
+{
+    header('HTTP/1.1 302 Redirect');
+    if (filter_var($url, FILTER_VALIDATE_URL)) {
+        header("Location: {$url}");
+        exit;
+    }
+
+    $location = url($url);
+    header("Location: {$location}");
+    exit;
+}
+
+
+/**
+ * ###############
+ * ###   CORE   ###
+ * ###############
+ */
+
+/**
+ * @return PDO
+ */
+function db(): PDO
+{
+    return Connection::getInstance();
+}
+
+function message(): Message
+{
+    return new Message();
+}
+
+function session(): Session
+{
+    return new Session();
+}
+
+
+/**
+ * ###############
+ * ###  MODEL  ###
+ * ###############
+ */
+function user(): User
+{
+    return new User();
 }

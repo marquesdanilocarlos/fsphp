@@ -12,7 +12,7 @@ const CONF_DB_NAME = "fsphp";
 /**
  * URLs
  */
-const CONF_URL_BASE = "http://localhost:8000/fsphp";
+const CONF_URL_BASE = "http://localhost:8000/06-seguranca-e-boas-praticas/06-08-camada-de-manipulacao-pt3";
 const CONF_URL_ADMIN = CONF_URL_BASE . "/admin";
 const CONF_URL_ERROR = CONF_URL_BASE . "/404";
 
@@ -36,3 +36,10 @@ const CONF_MESSAGE_INFO = 'info';
 const CONF_MESSAGE_SUCCESS = 'success';
 const CONF_MESSAGE_WARNING = 'warning';
 const CONF_MESSAGE_ERROR = 'error';
+
+
+/**
+ * PASSWORD
+ */
+const CONF_PASS_MIN_LENGTH = 8;
+const CONF_PASS_MAX_LENGTH = 40;
