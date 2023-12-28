@@ -27,3 +27,12 @@ const CONF_DATE_APP = "Y-m-d H:i:s";
  */
 
 const CONF_SESSION_PATH = __DIR__ . "/../../storage/session";
+
+/**
+ * MESSAGE
+ */
+const CONF_MESSAGE_CLASS = 'trigger';
+const CONF_MESSAGE_INFO = 'info';
+const CONF_MESSAGE_SUCCESS = 'success';
+const CONF_MESSAGE_WARNING = 'warning';
+const CONF_MESSAGE_ERROR = 'error';

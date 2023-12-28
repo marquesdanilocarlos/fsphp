@@ -48,7 +48,7 @@ class Session
      */
     public function set(string $key, $value): self
     {
-        $value = !is_array($value) ?: (object)$value;
+        $value = is_array($value) ?: (object)$value;
         $_SESSION[$key] = $value;
 
         return $this;
@@ -97,5 +97,16 @@ class Session
     {
         session_destroy();
         return $this;
+    }
+
+    public function flash(): ?Message
+    {
+        if (!$this->has('flash')) {
+            return null;
+        }
+
+        $flash = $this->flash;
+        $this->unset('flash');
+        return $flash;
     }
 }
