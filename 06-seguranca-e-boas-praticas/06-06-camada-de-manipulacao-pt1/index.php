@@ -12,7 +12,7 @@ require __DIR__ . "/../source/autoload.php";
  */
 fullStackPHPClassSession("string", __LINE__);
 
-$string = "Essa é uma string, contém um under_score e guarda-chuva <script></script>";
+$string = "Essa é uma string, nela temos um under_score e guarda-chuva";
 $message = new Message();
 
 echo strSlug($string);
@@ -21,3 +21,7 @@ echo $message->info(strSlug($string));
 
 echo $message->info(strStudlyCase($string));
 echo $message->info(strCamelCase($string));
+echo $message->info(strTitle($string));
+
+echo $message->info(strLimitWords($string, 7));
+echo $message->info(strLimitChars($string, 52));

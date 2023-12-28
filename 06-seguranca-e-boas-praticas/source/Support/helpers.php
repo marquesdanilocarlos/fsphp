@@ -43,3 +43,39 @@ function strCamelCase(string $string): string
 {
     return lcfirst(strStudlyCase($string));
 }
+
+function strTitle(string $string): string
+{
+    $string = filter_var($string, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    return mb_convert_case($string, MB_CASE_TITLE);
+}
+
+function strLimitWords(string $string, int $limit, string $pointer = '...'): string
+{
+    $string = trim(filter_var($string, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+    $arrWords = explode(" ", $string);
+    $numWords = count($arrWords);
+
+    if ($numWords < $limit) {
+        return $string;
+    }
+
+    $words = implode(" ", array_slice($arrWords, 0, $limit));
+
+    return "{$words} {$pointer}";
+}
+
+function strLimitChars(string $string, int $limit, string $pointer = '...'): string
+{
+    $string = trim(filter_var($string, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+
+    if (mb_strlen($string) < $limit) {
+        return $string;
+    }
+
+    $string = mb_substr($string, 0, $limit);
+    $chars = mb_strrpos($string, " ");
+    $string = mb_substr($string, 0, $chars);
+
+    return "{$string} {$pointer}";
+}
