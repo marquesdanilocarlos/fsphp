@@ -43,3 +43,6 @@ const CONF_MESSAGE_ERROR = 'error';
  */
 const CONF_PASS_MIN_LENGTH = 8;
 const CONF_PASS_MAX_LENGTH = 40;
+
+const CONF_PASS_ALGO = PASSWORD_DEFAULT;
+const CONF_PASS_OPTION = ['cost' => 10];

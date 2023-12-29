@@ -202,3 +202,38 @@ function user(): User
 {
     return new User();
 }
+
+
+/**
+ * ##################
+ * ###  PASSWORD  ###
+ * ##################
+ */
+
+/**
+ * @param string $password
+ * @return string
+ */
+function passwd(string $password): string
+{
+    return password_hash($password, CONF_PASS_ALGO, CONF_PASS_OPTION);
+}
+
+/**
+ * @param string $password
+ * @param string $hash
+ * @return bool
+ */
+function passwdVerify(string $password, string $hash): bool
+{
+    return password_verify($password, $hash);
+}
+
+/**
+ * @param string $hash
+ * @return bool
+ */
+function passwdRehash(string $hash): bool
+{
+    return password_needs_rehash($hash, CONF_PASS_ALGO, CONF_PASS_OPTION);
+}
