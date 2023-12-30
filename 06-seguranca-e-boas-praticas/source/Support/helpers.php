@@ -25,6 +25,10 @@ function isEmail(string $email): bool
  */
 function isPassword(string $password): bool
 {
+    if (password_get_info($password)['algo']) {
+        return true;
+    }
+
     return mb_strlen($password) >= CONF_PASS_MIN_LENGTH && mb_strlen($password) <= CONF_PASS_MAX_LENGTH;
 }
 
