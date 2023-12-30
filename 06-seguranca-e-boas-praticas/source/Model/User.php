@@ -105,8 +105,20 @@ class User extends Model
 
     private function insert(): ?int
     {
-        if (!$this->required() || !$this->validateEmail()) {
+        if (!$this->required()) {
             $this->message->warning('Nome, sobrenome, email e senha são obrigatórios');
+            return null;
+        }
+
+        if (!$this->validateEmail()) {
+            $this->message->warning('E-mail inválido');
+            return null;
+        }
+
+        if (!isPassword($this->password)) {
+            $this->message->warning(
+                'A senha deve ter entre ' . CONF_PASS_MIN_LENGTH . ' e ' . CONF_PASS_MAX_LENGTH . ' caracteres.'
+            );
             return null;
         }
 
@@ -132,11 +144,11 @@ class User extends Model
         }
 
         if ($this->getFail()) {
-            $this->message = "Não foi possível remover o usuário.";
+            $this->message->warning("Não foi possível remover o usuário.");
             return null;
         }
 
-        $this->message = "Usuário removido com sucesso!";
+        $this->message->success("Usuário removido com sucesso!");
         $this->data = null;
         return $this;
     }

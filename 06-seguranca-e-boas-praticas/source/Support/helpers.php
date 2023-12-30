@@ -242,7 +242,7 @@ function csrfInput(): string
 {
     session()->csrf();
     $token = session()->csrf_token ?? '';
-    return "<input type='text' name='csrf_token' value='{$token}'/>";
+    return "<input type='hidden' name='csrf_token' value='{$token}'/>";
 }
 
 function csrfVerify(array $request): bool
