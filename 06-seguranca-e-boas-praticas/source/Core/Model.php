@@ -11,7 +11,14 @@ abstract class Model
 {
     protected ?stdClass $data;
     protected ?PDOException $fail = null;
-    protected ?string $message;
+    protected ?Message $message;
+
+
+    public function __construct()
+    {
+        $this->message = new Message();
+    }
+
 
     public function __set(string $name, $value): void
     {
@@ -43,7 +50,7 @@ abstract class Model
         return $this->fail;
     }
 
-    public function getMessage(): ?string
+    public function getMessage(): ?Message
     {
         return $this->message;
     }
@@ -139,5 +146,16 @@ abstract class Model
         }
 
         return $filtered;
+    }
+
+    protected function required(): bool
+    {
+        $data = (array)$this->getData();
+        foreach (static::$required as $required) {
+            if (empty($data[$required])) {
+                return false;
+            }
+        }
+        return true;
     }
 }

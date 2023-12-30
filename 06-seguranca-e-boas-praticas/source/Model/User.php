@@ -7,51 +7,50 @@ use Source\Core\Model;
 class User extends Model
 {
     protected static array $safe = ["id", "created_at", "updated_at"];
-    protected static array $required = ["first_name", "last_name", "email"];
+    protected static array $required = ["first_name", "last_name", "email", "password"];
     protected static string $entity = "users";
 
-    public function bootstrap(string $firstName, string $lastName, string $email, string $document = null)
-    {
+    public function bootstrap(
+        string $firstName,
+        string $lastName,
+        string $email,
+        string $password,
+        string $document = null
+    ) {
         $this->first_name = $firstName;
         $this->last_name = $lastName;
         $this->email = $email;
+        $this->password = $password;
         $this->document = $document;
-
 
         return $this;
     }
 
-    public function getById(int $id, string $columns = "*"): ?self
+    public function find(string $terms, string $params, string $columns = '*'): ?User
     {
         $data = $this->read(
-            "SELECT {$columns} FROM " . self::$entity . " WHERE id = :id",
-            "id={$id}"
+            "SELECT {$columns} FROM " . self::$entity . " WHERE {$terms}",
+            $params
         );
 
         if ($this->getFail() || !$data->rowCount()) {
-            $this->message = "Usuário não encontrado para o id informado";
             return null;
         }
 
         return $data->fetchObject(self::class);
     }
 
-    public function getByEmail(string $email, string $columns = "*"): ?self
+    public function findById(int $id, string $columns = "*"): ?self
     {
-        $data = $this->read(
-            "SELECT {$columns} FROM " . self::$entity . " WHERE email = :email",
-            "email={$email}"
-        );
-
-        if ($this->getFail() || !$data->rowCount()) {
-            $this->message = "Usuário não encontrado para o email informado";
-            return null;
-        }
-
-        return $data->fetchObject(self::class);
+        return $this->find("id=:id", "id={$id}", $columns);
     }
 
-    public function getAll(int $limit = 30, int $offset = 0, string $columns = "*"): ?array
+    public function findByEmail(string $email, string $columns = "*"): ?self
+    {
+        return $this->find("email=:email", "email={$email}", $columns);
+    }
+
+    public function findAll(int $limit = 30, int $offset = 0, string $columns = "*"): ?array
     {
         $data = $this->read(
             "SELECT {$columns} FROM " . self::$entity . " LIMIT :limit OFFSET :offset",
@@ -59,7 +58,6 @@ class User extends Model
         );
 
         if ($this->getFail() || !$data->rowCount()) {
-            $this->message = "Sua consulta não retornou nenhum resultado";
             return null;
         }
 
@@ -69,57 +67,60 @@ class User extends Model
     public function save(): ?self
     {
         if (!empty($this->id)) {
-            $userId = $this->id;
-            $this->atualize($userId);
+            $userId = $this->atualize($this->id);
         }
 
         if (empty($this->id)) {
             $userId = $this->insert();
         }
 
-        $this->data = $this->read("SELECT * FROM " . self::$entity . " WHERE id = :id", "id={$userId}")->fetch();
+        if (!$userId) {
+            return null;
+        }
+
+        $this->data = ($this->findById($userId))->getData();
         return $this;
     }
 
-    private function atualize(int $userId)
+    private function atualize(int $userId): ?int
     {
-        $email = $this->read(
-            "SELECT id FROM " . self::$entity . " WHERE email = :email AND id != :id",
-            "email={$this->email}&id={$userId}"
-        );
+        $email = $this->find("email = :email AND id != :id", "email={$this->email}&id={$userId}");
 
-        if ($email->rowCount()) {
-            $this->message = "O e-mail informado já está cadastrado.";
+
+        if ($email) {
+            $this->message->warning("O e-mail informado já está cadastrado.");
             return null;
         }
 
         $this->update(self::$entity, $this->safe(), "id = :id", "id={$userId}");
 
         if ($this->getFail()) {
-            $this->message = "Erro ao cadastrar, verifique os dados";
+            $this->message->error("Erro ao cadastrar, verifique os dados");
             return null;
         }
 
-        $this->message = "Dados atualizados com sucesso!";
+        $this->message->success("Dados atualizados com sucesso!");
+        return $userId;
     }
 
     private function insert(): ?int
     {
-        if (!$this->required()) {
+        if (!$this->required() || !$this->validateEmail()) {
+            $this->message->warning('Nome, sobrenome, email e senha são obrigatórios');
             return null;
         }
 
-        if ($this->getByEmail($this->email)) {
-            $this->message = "O e-mail informado já está cadastrado.";
+        if ($this->findByEmail($this->email)) {
+            $this->message->warning("O e-mail informado já está cadastrado.");
             return null;
         }
 
         $userId = $this->create(self::$entity, $this->safe());
         if ($this->getFail()) {
-            $this->message = "Erro ao cadastrar, verifique os dados";
+            $this->message->error("Erro ao cadastrar, verifique os dados");
             return null;
         }
-        $this->message = "Cadastro realizado com sucesso!";
+        $this->message->success("Cadastro realizado com sucesso!");
 
         return $userId;
     }
@@ -140,18 +141,10 @@ class User extends Model
         return $this;
     }
 
-    private
-    function required(): bool
+    private function validateEmail(): bool
     {
-        foreach (self::$required as $required) {
-            if (empty($this->{$required})) {
-                $this->message = "O campo {$required} é obrigatório!";
-                return false;
-            }
-        }
-
         if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            $this->message = "O e-mail informado não é válido!";
+            $this->message = message()->warning("O e-mail informado não é válido!");
             return false;
         }
 
