@@ -48,7 +48,7 @@ class Session
      */
     public function set(string $key, $value): self
     {
-        $value = is_array($value) ?: (object)$value;
+        $value = is_array($value) ? (object)$value : $value;
         $_SESSION[$key] = $value;
 
         return $this;
@@ -108,5 +108,11 @@ class Session
         $flash = $this->flash;
         $this->unset('flash');
         return $flash;
+    }
+
+    public function csrf()
+    {
+        $token = base64_encode(random_bytes(20));
+        $this->set('csrf_token', $token);
     }
 }

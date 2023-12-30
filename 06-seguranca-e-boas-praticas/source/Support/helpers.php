@@ -237,3 +237,22 @@ function passwdRehash(string $hash): bool
 {
     return password_needs_rehash($hash, CONF_PASS_ALGO, CONF_PASS_OPTION);
 }
+
+function csrfInput(): string
+{
+    session()->csrf();
+    $token = session()->csrf_token ?? '';
+    return "<input type='text' name='csrf_token' value='{$token}'/>";
+}
+
+function csrfVerify(array $request): bool
+{
+    $sessionToken = session()->csrf_token;
+    $requestToken = $request['csrf_token'];
+
+    if (empty($sessionToken) || empty($requestToken) || $requestToken != $sessionToken) {
+        return false;
+    }
+
+    return true;
+}
