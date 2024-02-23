@@ -1,0 +1,22 @@
+{
+  "name": "marquesdanilocarlos/fsphp",
+  "description": "FSPHP",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "Source\\": "source/"
+    },
+    "files": [
+      "./source/Support/config.php",
+      "./source/Support/helpers.php"
+    ]
+  },
+  "authors": [
+    {
+      "name": "Danilo Carlos Marques",
+      "email": "danilo.marques@basis.com.br"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {}
+}
