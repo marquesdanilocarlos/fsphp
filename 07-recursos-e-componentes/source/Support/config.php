@@ -46,3 +46,12 @@ const CONF_PASS_MAX_LENGTH = 40;
 
 const CONF_PASS_ALGO = PASSWORD_DEFAULT;
 const CONF_PASS_OPTION = ['cost' => 10];
+
+/**
+ * MAIL
+ */
+const CONF_MAIL_HOST = '';
+const CONF_MAIL_PORT = '';
+const CONF_MAIL_USER = '';
+const CONF_MAIL_PASS = '';
+const CONF_MAIL_SENDER = '';
