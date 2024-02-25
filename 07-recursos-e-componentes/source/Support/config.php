@@ -50,8 +50,13 @@ const CONF_PASS_OPTION = ['cost' => 10];
 /**
  * MAIL
  */
-const CONF_MAIL_HOST = '';
-const CONF_MAIL_PORT = '';
+const CONF_MAIL_HOST = '172.17.0.1';
+const CONF_MAIL_PORT = 2025;
 const CONF_MAIL_USER = '';
 const CONF_MAIL_PASS = '';
-const CONF_MAIL_SENDER = '';
+const CONF_MAIL_SENDER = ['marquesdanilocarlos@gmail.com', 'Danilo'];
+const CONF_MAIL_OPTION_LANG = 'br';
+const CONF_MAIL_OPTION_HTML = true;
+const CONF_MAIL_OPTION_AUTH = false;
+const CONF_MAIL_OPTION_SECURE = 'tls';
+const CONF_MAIL_OPTION_CHARSET = 'utf-8';
