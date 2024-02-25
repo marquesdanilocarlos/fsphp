@@ -260,3 +260,25 @@ function csrfVerify(array $request): bool
 
     return true;
 }
+
+/**
+ * ##################
+ * ####   DATE   ####
+ * ##################
+ */
+
+function dateFromat(string $date = 'now', string $format = CONF_DATE_BR): string
+{
+    return (new DateTime($date))->format($format);
+}
+
+
+function dateFromatBR(string $date = 'now'): string
+{
+    return (new DateTime($date))->format(CONF_DATE_BR);
+}
+
+function dateFormatDefault(string $date = 'now'): string
+{
+    return (new DateTime())->format(CONF_DATE_APP);
+}
