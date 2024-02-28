@@ -61,3 +61,9 @@ const CONF_MAIL_OPTION_HTML = true;
 const CONF_MAIL_OPTION_AUTH = false;
 const CONF_MAIL_OPTION_SECURE = 'tls';
 const CONF_MAIL_OPTION_CHARSET = 'utf-8';
+
+/**
+ * VIEW
+ */
+const CONF_VIEW_PATH = __DIR__ . "/../../assets/views";
+const CONF_VIEW_EXT = "php";
