@@ -19,6 +19,7 @@
   ],
   "minimum-stability": "stable",
     "require": {
-        "phpmailer/phpmailer": "^6.9"
+      "phpmailer/phpmailer": "^6.9",
+      "league/plates": "^3.5"
     }
 }
