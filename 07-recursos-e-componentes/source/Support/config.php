@@ -67,3 +67,18 @@ const CONF_MAIL_OPTION_CHARSET = 'utf-8';
  */
 const CONF_VIEW_PATH = __DIR__ . "/../../assets/views";
 const CONF_VIEW_EXT = "php";
+
+/**
+ * UPLOAD
+ */
+const CONF_UPLOAD_DIR = '../storage/uploads';
+const CONF_UPLOAD_IMG_DIR = 'image';
+const CONF_UPLOAD_FILE_DIR = 'file';
+const CONF_UPLOAD_MEDIA_DIR = 'media';
+
+/**
+ * IMAGE
+ */
+const CONF_IMG_CACHE = CONF_UPLOAD_DIR . '/' . CONF_UPLOAD_IMG_DIR . '/cache';
+const CONF_IMG_SIZE = 2000;
+const CONF_IMG_QUALITY = ['jpg' => 75, 'png' => 5];
