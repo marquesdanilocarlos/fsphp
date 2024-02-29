@@ -1,5 +1,7 @@
 <?php
 
+use Source\Support\Upload;
+
 require __DIR__ . '/../../fullstackphp/fsphp.php';
 fullStackPHPClassName("07.07 - Uma fachada para arquivos");
 
@@ -10,6 +12,18 @@ require __DIR__ . "/../vendor/autoload.php";
  */
 fullStackPHPClassSession("image", __LINE__);
 
+$upload = new Upload();
+
+$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+if ($post && $post['send'] === 'image') {
+    $uploadResult = $upload->image($_FILES['file'], $post['name']);
+    if ($uploadResult) {
+        echo "<img src='{$uploadResult}' />";
+    } else {
+        echo $upload->getMessage();
+    }
+}
 
 $formSend = "image";
 require __DIR__ . "/form.php";
