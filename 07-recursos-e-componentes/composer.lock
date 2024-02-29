@@ -4,8 +4,66 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "891e447c57e6d0f5ff57d3a884f82343",
+  "content-hash": "a43edbade80f5a5ccc0c9fe60dcdbc42",
   "packages": [
+    {
+      "name": "coffeecode/uploader",
+      "version": "2.0.4",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/robsonvleite/uploader.git",
+        "reference": "4601ff1665a4591087c524239c1e545ba4834453"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/robsonvleite/uploader/zipball/4601ff1665a4591087c524239c1e545ba4834453",
+        "reference": "4601ff1665a4591087c524239c1e545ba4834453",
+        "shasum": ""
+      },
+      "require": {
+        "ext-exif": "*",
+        "ext-gd": "*",
+        "ext-mbstring": "*",
+        "php": ">=8.0"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
+          "CoffeeCode\\Uploader\\": "src"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Robson V. Leite",
+          "email": "cursos@upinside.com.br",
+          "role": "Developer"
+        },
+        {
+          "name": "Tiago Chini",
+          "email": "tiago.chini@hotmail.com",
+          "role": "collaborator"
+        }
+      ],
+      "description": "It is a easy PHP upload manager for images, files and media in your application",
+      "homepage": "http://www.upinside.com.br",
+      "keywords": [
+        "Coffeecode",
+        "Image upload",
+        "file upload",
+        "media upload",
+        "upinside",
+        "upload"
+      ],
+      "support": {
+        "issues": "https://github.com/robsonvleite/uploader/issues",
+        "source": "https://github.com/robsonvleite/uploader/tree/2.0.4"
+      },
+      "time": "2023-02-14T14:29:20+00:00"
+    },
     {
       "name": "league/plates",
       "version": "v3.5.0",
