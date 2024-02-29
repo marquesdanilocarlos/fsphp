@@ -21,6 +21,7 @@
     "require": {
       "phpmailer/phpmailer": "^6.9",
       "league/plates": "^3.5",
-      "coffeecode/uploader": "^2.0"
+      "coffeecode/uploader": "^2.0",
+      "coffeecode/cropper": "^2.0"
     }
 }
