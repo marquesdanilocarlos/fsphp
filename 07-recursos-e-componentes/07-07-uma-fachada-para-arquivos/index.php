@@ -34,6 +34,16 @@ require __DIR__ . "/form.php";
  */
 fullStackPHPClassSession("file", __LINE__);
 
+$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+if ($post && $post['send'] === 'file') {
+    $uploadResult = $upload->file($_FILES['file'], $post['name']);
+    if ($uploadResult) {
+        echo "<a target='_blank' href='{$uploadResult}'>Ver aquivo</a>";
+    } else {
+        echo $upload->getMessage();
+    }
+}
 
 $formSend = "file";
 require __DIR__ . "/form.php";

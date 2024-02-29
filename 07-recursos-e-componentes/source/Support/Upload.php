@@ -2,6 +2,7 @@
 
 namespace Source\Support;
 
+use CoffeeCode\Uploader\File;
 use CoffeeCode\Uploader\Image;
 use Source\Core\Message;
 
@@ -25,15 +26,22 @@ class Upload
         return $upload->upload($image, $name, $width, CONF_IMG_QUALITY);
     }
 
-    public function file()
+    public function file(array $file, string $name): ?string
+    {
+        $upload = new File(CONF_UPLOAD_DIR, CONF_UPLOAD_FILE_DIR);
+        if (empty($file['type']) || !in_array($file['type'], $upload::isAllowed())) {
+            $this->message->error('Você não selecionou um arquivo válido');
+            return null;
+        }
+
+        return $upload->upload($file, $name);
+    }
+
+    public function media(): ?string
     {
     }
 
-    public function media()
-    {
-    }
-
-    public function remove()
+    public function remove(): void
     {
     }
 
