@@ -54,6 +54,16 @@ require __DIR__ . "/form.php";
  */
 fullStackPHPClassSession("media", __LINE__);
 
+$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+if ($post && $post['send'] === 'media') {
+    $uploadResult = $upload->media($_FILES['file'], $post['name']);
+    if ($uploadResult) {
+        echo "<a target='_blank' href='{$uploadResult}'>Ver aquivo</a>";
+    } else {
+        echo $upload->getMessage();
+    }
+}
 
 $formSend = "media";
 require __DIR__ . "/form.php";
@@ -63,3 +73,5 @@ require __DIR__ . "/form.php";
  * [ remove ] Um método adicional
  */
 fullStackPHPClassSession("remove", __LINE__);
+
+$upload->remove(__DIR__ . "/../storage/uploads/file/2024/02/nome-do-arquivo.mp4");

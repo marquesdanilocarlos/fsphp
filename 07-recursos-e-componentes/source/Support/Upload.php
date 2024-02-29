@@ -4,6 +4,7 @@ namespace Source\Support;
 
 use CoffeeCode\Uploader\File;
 use CoffeeCode\Uploader\Image;
+use CoffeeCode\Uploader\Media;
 use Source\Core\Message;
 
 class Upload
@@ -37,12 +38,24 @@ class Upload
         return $upload->upload($file, $name);
     }
 
-    public function media(): ?string
+    public function media(array $media, string $name): ?string
     {
+        $upload = new Media(CONF_UPLOAD_DIR, CONF_UPLOAD_MEDIA_DIR);
+        if (empty($media['type']) || !in_array($media['type'], $upload::isAllowed())) {
+            $this->message->error('Você não selecionou uma mídia válida');
+            return null;
+        }
+
+        return $upload->upload($media, $name);
     }
 
-    public function remove(): void
+    public function remove(string $filePath): void
     {
+        if (!file_exists($filePath) || !is_file($filePath)) {
+            return;
+        }
+
+        unlink($filePath);
     }
 
     public function getMessage(): Message
