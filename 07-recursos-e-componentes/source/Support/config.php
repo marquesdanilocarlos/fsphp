@@ -82,3 +82,16 @@ const CONF_UPLOAD_MEDIA_DIR = 'media';
 const CONF_IMG_CACHE = CONF_UPLOAD_DIR . '/' . CONF_UPLOAD_IMG_DIR . '/cache';
 const CONF_IMG_SIZE = 2000;
 const CONF_IMG_QUALITY = ['jpg' => 75, 'png' => 5];
+
+/**
+ * SOCIAL
+ */
+
+const CONF_SOCIAL_TWITTER_CREATOR = '@robsonvleite';
+const CONF_SOCIAL_TWITTER_PUBLISHER = '@robsonvleite';
+const CONF_SOCIAL_FACEBOOK_APP = '';
+const CONF_SOCIAL_FACEBOOK_AUTHOR = 'marquesdanilocarlos';
+const CONF_SOCIAL_FACEBOOK_PAGE = 'upinside';
+const CONF_SOCIAL_GOOGLE_PAGE = 'upinside';
+const CONF_SOCIAL_GOOGLE_AUTHOR = '';
+
