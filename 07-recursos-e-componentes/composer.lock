@@ -4,7 +4,7 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "884c0daf3133939536cbc18dfea5b139",
+  "content-hash": "e03e57f22c13c21534245d0aad9d7fa8",
   "packages": [
     {
       "name": "coffeecode/cropper",
@@ -62,6 +62,59 @@
         "source": "https://github.com/robsonvleite/cropper/tree/2.0.4"
       },
       "time": "2023-02-14T14:32:48+00:00"
+    },
+    {
+      "name": "coffeecode/optimizer",
+      "version": "2.1.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/robsonvleite/optimizer.git",
+        "reference": "c4c9e979a97e3ca46f2fd55c1aad53f707ddbead"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/robsonvleite/optimizer/zipball/c4c9e979a97e3ca46f2fd55c1aad53f707ddbead",
+        "reference": "c4c9e979a97e3ca46f2fd55c1aad53f707ddbead",
+        "shasum": ""
+      },
+      "require": {
+        "ext-simplexml": "*",
+        "php": ">=8.0"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
+          "CoffeeCode\\Optimizer\\": "src"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Robson V. Leite",
+          "email": "cursos@upinside.com.br",
+          "role": "Developer"
+        }
+      ],
+      "description": "Optimizer makes it easy to bookmark your site tags, open graph and twitter card",
+      "homepage": "http://www.upinside.com.br",
+      "keywords": [
+        "Coffeecode",
+        "Facebook Tags",
+        "SMO",
+        "meta tags",
+        "open graph",
+        "seo",
+        "twitter card",
+        "upinside"
+      ],
+      "support": {
+        "issues": "https://github.com/robsonvleite/optimizer/issues",
+        "source": "https://github.com/robsonvleite/optimizer/tree/2.1.1"
+      },
+      "time": "2022-04-07T14:43:46+00:00"
     },
     {
       "name": "coffeecode/uploader",
