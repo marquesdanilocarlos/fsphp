@@ -3,15 +3,15 @@
 namespace Source\Support;
 
 use CoffeeCode\Cropper\Cropper;
+use Source\Interface\ThumbInterface;
 
-class Thumb
+readonly class Thumb implements ThumbInterface
 {
-    private Cropper $cropper;
 
     public function __construct(
-        private string $uploads = CONF_UPLOAD_DIR
+        private string $uploads = CONF_UPLOAD_DIR,
+        private Cropper $cropper = new Cropper(CONF_IMG_CACHE, CONF_IMG_QUALITY['jpg'], CONF_IMG_QUALITY['png'])
     ) {
-        $this->cropper = new Cropper(CONF_IMG_CACHE, CONF_IMG_QUALITY['jpg'], CONF_IMG_QUALITY['png']);
     }
 
     public function make(string $image, int $width, int $heigth = null): string

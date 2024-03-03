@@ -84,14 +84,18 @@ const CONF_IMG_SIZE = 2000;
 const CONF_IMG_QUALITY = ['jpg' => 75, 'png' => 5];
 
 /**
+ * SITE
+ */
+const CONF_SITE_NAME = 'FSPHP';
+const CONF_SITE_LANG = 'pt_BR';
+const CONF_SITE_DOMAIN = 'fsphp.com.br';
+
+/**
  * SOCIAL
  */
-
 const CONF_SOCIAL_TWITTER_CREATOR = '@robsonvleite';
 const CONF_SOCIAL_TWITTER_PUBLISHER = '@robsonvleite';
-const CONF_SOCIAL_FACEBOOK_APP = '';
+const CONF_SOCIAL_FACEBOOK_APP = '356464859317524';
 const CONF_SOCIAL_FACEBOOK_AUTHOR = 'marquesdanilocarlos';
-const CONF_SOCIAL_FACEBOOK_PAGE = 'upinside';
-const CONF_SOCIAL_GOOGLE_PAGE = 'upinside';
-const CONF_SOCIAL_GOOGLE_AUTHOR = '';
+const CONF_SOCIAL_FACEBOOK_PAGE = 'marquesdanilocarlos';
 

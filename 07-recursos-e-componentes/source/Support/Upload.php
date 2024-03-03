@@ -6,14 +6,15 @@ use CoffeeCode\Uploader\File;
 use CoffeeCode\Uploader\Image;
 use CoffeeCode\Uploader\Media;
 use Source\Core\Message;
+use Source\Interface\UploadInterface;
 
-class Upload
+readonly class Upload implements UploadInterface
 {
-    private Message $message;
 
-    public function __construct()
+    public function __construct(
+        private Message $message = new Message()
+    )
     {
-        $this->message = new Message();
     }
 
     public function image(array $image, string $name, int $width = CONF_IMG_SIZE): ?string

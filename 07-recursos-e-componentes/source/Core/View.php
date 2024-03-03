@@ -3,12 +3,17 @@
 namespace Source\Core;
 
 use League\Plates\Engine;
+use Source\Interface\ViewInterface;
 
-class View
+class View implements ViewInterface
 {
     private Engine $engine;
 
-    public function __construct(string $path = CONF_VIEW_PATH, string $ext = CONF_VIEW_EXT)
+    public function __construct(
+        string $path = CONF_VIEW_PATH,
+        string $ext = CONF_VIEW_EXT,
+
+    )
     {
         $this->engine = new Engine($path, $ext);
     }
