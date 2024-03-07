@@ -4,7 +4,7 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "e03e57f22c13c21534245d0aad9d7fa8",
+  "content-hash": "c6c382b30cb9df79cc36f916dc80d4d1",
   "packages": [
     {
       "name": "coffeecode/cropper",
@@ -115,6 +115,54 @@
         "source": "https://github.com/robsonvleite/optimizer/tree/2.1.1"
       },
       "time": "2022-04-07T14:43:46+00:00"
+    },
+    {
+      "name": "coffeecode/paginator",
+      "version": "2.0.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/robsonvleite/paginator.git",
+        "reference": "719d7520a9e065d2ba4ac9a8b6ef26022c535b15"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/robsonvleite/paginator/zipball/719d7520a9e065d2ba4ac9a8b6ef26022c535b15",
+        "reference": "719d7520a9e065d2ba4ac9a8b6ef26022c535b15",
+        "shasum": ""
+      },
+      "require": {
+        "php": ">=8.0"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
+          "CoffeeCode\\Paginator\\": "src"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Robson V. Leite",
+          "email": "cursos@upinside.com.br",
+          "role": "Developer"
+        }
+      ],
+      "description": "Paginator is simple and is ready to generate results navigation in your application",
+      "homepage": "http://www.upinside.com.br",
+      "keywords": [
+        "Coffeecode",
+        "pagination",
+        "paginator",
+        "upinside"
+      ],
+      "support": {
+        "issues": "https://github.com/robsonvleite/paginator/issues",
+        "source": "https://github.com/robsonvleite/paginator/tree/2.0.1"
+      },
+      "time": "2022-04-07T00:53:02+00:00"
     },
     {
       "name": "coffeecode/uploader",
