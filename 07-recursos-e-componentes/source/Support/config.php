@@ -61,3 +61,41 @@ const CONF_MAIL_OPTION_HTML = true;
 const CONF_MAIL_OPTION_AUTH = false;
 const CONF_MAIL_OPTION_SECURE = 'tls';
 const CONF_MAIL_OPTION_CHARSET = 'utf-8';
+
+/**
+ * VIEW
+ */
+const CONF_VIEW_PATH = __DIR__ . "/../../assets/views";
+const CONF_VIEW_EXT = "php";
+
+/**
+ * UPLOAD
+ */
+const CONF_UPLOAD_DIR = '../storage/uploads';
+const CONF_UPLOAD_IMG_DIR = 'image';
+const CONF_UPLOAD_FILE_DIR = 'file';
+const CONF_UPLOAD_MEDIA_DIR = 'media';
+
+/**
+ * IMAGE
+ */
+const CONF_IMG_CACHE = CONF_UPLOAD_DIR . '/' . CONF_UPLOAD_IMG_DIR . '/cache';
+const CONF_IMG_SIZE = 2000;
+const CONF_IMG_QUALITY = ['jpg' => 75, 'png' => 5];
+
+/**
+ * SITE
+ */
+const CONF_SITE_NAME = 'FSPHP';
+const CONF_SITE_LANG = 'pt_BR';
+const CONF_SITE_DOMAIN = 'fsphp.com.br';
+
+/**
+ * SOCIAL
+ */
+const CONF_SOCIAL_TWITTER_CREATOR = '@robsonvleite';
+const CONF_SOCIAL_TWITTER_PUBLISHER = '@robsonvleite';
+const CONF_SOCIAL_FACEBOOK_APP = '356464859317524';
+const CONF_SOCIAL_FACEBOOK_AUTHOR = 'marquesdanilocarlos';
+const CONF_SOCIAL_FACEBOOK_PAGE = 'marquesdanilocarlos';
+
