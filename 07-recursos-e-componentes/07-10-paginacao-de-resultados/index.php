@@ -22,12 +22,13 @@ $pager->pager($total, 5, $getPage, 2);
 $users = (new User())->findAll($pager->limit(), $pager->offset());
 
 foreach ($users as $user) {
+    $createdAt = dateFormatBR($user->created_at);
     echo <<<user
-<article>
-<h1>{$user->first_name} {$user->last_name}</h1>
-<p>{$user->email} - {$user->created_at}</p>
-</article>
-user;
+        <article>
+            <h1>{$user->first_name} {$user->last_name}</h1>
+            <p>{$user->email} - {$createdAt}</p>
+        </article>
+    user;
 }
 
 echo $pager->render();
