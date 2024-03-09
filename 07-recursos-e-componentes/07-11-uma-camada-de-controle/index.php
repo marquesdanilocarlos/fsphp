@@ -10,3 +10,10 @@ require __DIR__ . "/../vendor/autoload.php";
  */
 fullStackPHPClassSession("controller", __LINE__);
 
+$controller = new \Source\App\Controller\UserController();
+
+if (empty($_GET['id'])) {
+    $controller->home();
+} else {
+    $controller->edit();
+}

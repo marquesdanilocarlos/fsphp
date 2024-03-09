@@ -10,3 +10,5 @@ foreach ($list as $user): ?>
     </article>
 <?php
 endforeach ?>
+
+<?= $pager ?? null ?>
