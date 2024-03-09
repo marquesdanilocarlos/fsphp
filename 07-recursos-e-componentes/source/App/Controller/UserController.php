@@ -33,6 +33,20 @@ class UserController extends Controller
 
     public function edit()
     {
+        $userId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+        $user = $userId ? user()->findById($userId) : null;
 
+        if (!$user) {
+            message()->error('Usuário não encontrado.');
+            header('Location: ./');
+            exit;
+        }
+
+        echo $this->view->render(
+            'test::user',
+            [
+                'user' => $user
+            ]
+        );
     }
 }
