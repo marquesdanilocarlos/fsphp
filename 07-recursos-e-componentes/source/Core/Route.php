@@ -2,7 +2,7 @@
 
 namespace Source\Core;
 
-class Router
+class Route
 {
     protected static array $route;
 
@@ -19,5 +19,12 @@ class Router
 
         var_dump(self::$route);
     }
+
+    public static function getRoute(): array
+    {
+        return self::$route;
+    }
+
+
 
 }
