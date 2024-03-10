@@ -13,11 +13,34 @@ class Route
             $route => [
                 'route' => $route,
                 'controller' => !is_string($handler) ? $handler : strstr($handler, ':', true),
-                'method' => !is_string($handler) ?: str_replace(":", "",  strstr($handler, ':', false))
+                'method' => !is_string($handler) ?: str_replace(":", "", strstr($handler, ':', false))
             ]
         ];
 
-        var_dump(self::$route);
+        self::dispatch($get);
+    }
+
+    public static function dispatch(?string $route): void
+    {
+        $route = self::$route[$route] ?? [];
+
+        if ($route) {
+            if ($route['controller'] instanceof \Closure) {
+                call_user_func($route['controller']);
+                return;
+            }
+
+            $controller = self::getNamespace() . $route['controller'];
+            $method = $route['method'];
+
+            if (class_exists($controller)) {
+                $newController = new $controller;
+                if (method_exists($newController, $method)) {
+                    $newController->{$method}();
+                }
+            }
+
+        }
     }
 
     public static function getRoute(): array
@@ -25,6 +48,9 @@ class Route
         return self::$route;
     }
 
-
+    public static function getNamespace(): string
+    {
+        return "Source\App\Controller\\";
+    }
 
 }
