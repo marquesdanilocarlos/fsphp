@@ -12,6 +12,11 @@ abstract class Model
     protected ?stdClass $data;
     protected ?PDOException $fail = null;
     protected ?Message $message;
+    protected string $query;
+    protected string $params;
+    protected string $order;
+    protected int $limit;
+    protected int $offset;
 
 
     public function __construct()
@@ -53,6 +58,18 @@ abstract class Model
     public function getMessage(): ?Message
     {
         return $this->message;
+    }
+
+    public function find(?string $terms = null, ?string $params = null, string $columns = '*'): self
+    {
+        if ($terms) {
+            $this->query = "SELECT {$columns} FROM " . static::$entity . " WHERE {$terms}";
+            parse_str($params, $this->params);
+            return $this;
+        }
+
+        $this->query = "SELECT {$columns} FROM " . static::$entity;
+        return $this;
     }
 
     protected function create(string $entity, array $data): ?int
